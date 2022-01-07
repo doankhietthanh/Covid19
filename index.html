@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Covid tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap"
+        rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <!-- CSS -->
+    <link rel="stylesheet" href="./css/grid.css">
+    <link rel="stylesheet" href="./css/app.css">
+    <link rel="shortcut icon" href="./image/favicon.png" type="image/x-icon">
+
+</head>
+
+<body class="loading">
+    <div class="container">
+        <!-- navbar -->
+        <div class="navbar-wrapper">
+            <div class="nav">
+                <a href="#" class="logo">C <i class='bx bxs-virus'></i> VID TRACKER</a>
+                <div class="about">
+                    <div class="description">
+                        <h4 class="hello">I'm</h4>
+                        <p class="name">Đoàn Khiết Thanh</p>
+                    </div>
+                    <div class="avatar">
+                        <img
+                            src="https://scontent.fdad3-5.fna.fbcdn.net/v/t1.6435-9/84181118_2535380486674771_9025700599462625280_n.jpg?_nc_cat=102&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=9Dm97GYdjyoAX-vc03K&_nc_ht=scontent.fdad3-5.fna&oh=00_AT_L-O1fc3pTdOUQaKJ0_TIq1-o0CKgqM9JXIaquj23yhQ&oe=61FB94F4">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- main -->
+        <div class="main">
+            <div class="statistical">
+                <div class="summary">
+                    <div class="cases">
+                        <div class="total-cases">
+                            <i class='bx bx-globe'></i>
+                            <h4>Total Cases</h4>
+                            <div class="confirmed" id="total-confirmed">0</div>
+                        </div>
+                        <div class="deaths-cases">
+                            <i class='bx bx-user-x'></i>
+                            <h4>Total Deaths</h4>
+                            <div class="deaths" id="total-deaths">0</div>
+                        </div>
+                        <div class="active-cases">
+                            <i class='bx bx-loader-circle'></i>
+                            <h4>Active Cases</h4>
+                            <div class="active-confirmed">0</div>
+                        </div>
+                        <div class="recovered-cases">
+                            <i class='bx bx-check-circle'></i>
+                            <h4>Recovered Cases</h4>
+                            <div class="recovered" id="total-recovered">0</div>
+                        </div>
+                    </div>
+                    <div class="country">
+                        <p>Affected Country</p>
+                        <h2 id="country-select">Global</h2>
+                        <span class="distance"> <i class='bx bx-right-arrow-alt'></i> 123 km</span>
+                        <div class="country-map" id="map"></div>
+                    </div>
+                </div>
+                <div class="chart" id="all-time-chart">
+                </div>
+            </div>
+            <div class="report">
+                <div class="search-wrapper">
+                    <form class="search">
+                        <input type="text" id="input-country" class="search-term" placeholder="Report Country">
+                        <button type="submit" class="search-button">
+                            <i class='bx bx-search'></i>
+                        </button>
+                    </form>
+                    <div class="report-table">
+                        <ul id="country-select-list">
+                            <!-- <li>
+                                <img alt="United States"
+                                    src="http://purecatamphetamine.github.io/country-flag-icons/3x2/US.svg" /> United
+                                States
+                                <span>45,000</span>
+                            </li>
+                            <li>
+                                <img alt="Viet Nam"
+                                    src="http://purecatamphetamine.github.io/country-flag-icons/3x2/VN.svg" /> Viet Nam
+                                <span>45,000</span>
+                            </li>
+                            <li>
+                                <img alt="France"
+                                    src="http://purecatamphetamine.github.io/country-flag-icons/3x2/FR.svg" />
+                                France
+                                <span>45,000</span>
+                            </li>
+                            <li>
+                                <img alt="Spain"
+                                    src="http://purecatamphetamine.github.io/country-flag-icons/3x2/ES.svg" />
+                                Spain
+                                <span>45,000</span>
+                            </li> -->
+                        </ul>
+                    </div>
+                </div>
+                <div class="table">
+                    <h3 class="table-description">Top 10 countries with the highest number of cases</h3>
+                    <div class="table-wrapper">
+                        <table class="fl-table" id="table_countries">
+                            <thead>
+                                <tr>
+                                    <th>Country</th>
+                                    <th>Confirmed</th>
+                                    <th>Deaths</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="loader">
+            <i class="bx bxs-virus bx-spin"></i>
+        </div>
+    </div>
+
+    <!-- apex charts -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <!-- google map -->
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZOfffvAfqQZwWbxS-AvPo1ZCQA_pr0m0&callback=initMap&v=weekly"
+        async></script>
+    <!-- JS -->
+    <script src="./js/app.js"></script>
+    <script src="./js/fecthApi.js"></script>
+    <script src="./js/covidApi.js"></script>
+</body>
+
+</html>
