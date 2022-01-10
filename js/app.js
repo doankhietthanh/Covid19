@@ -1,7 +1,7 @@
 const CASE_COLOR = {
-  confirmed: "#ff0000",
-  recovered: "#008000",
-  deaths: "#373c43",
+  confirmed: "#0072ff",
+  recovered: "#35CA68",
+  deaths: "#ff3c60",
 };
 const CASE_STATUS = {
   confirmed: "confirmed",
@@ -96,11 +96,11 @@ loadSummary = async (country) => {
 };
 
 getLocation = async (country) => {
-  let lat, lon;
+  let location, lat, lon;
   if (isGlobal(country)) {
     (lat = 0), (lon = 0);
   } else {
-    let location = await covidApi.getCountryAllTimeCases(
+    location = await covidApi.getCountryAllTimeCases(
       country,
       CASE_STATUS.confirmed
     );
@@ -114,11 +114,16 @@ getLocation = async (country) => {
     const latHere = position.coords.latitude;
     const lonHere = position.coords.longitude;
     const p1 = new google.maps.LatLng(latHere, lonHere);
-    document.querySelector(
-      ".distance"
-    ).innerHTML = `<i class='bx bx-right-arrow-alt'></i> ${formatNumber(
-      Math.floor(getDistance(p1, p2) / 1000)
-    )} km`;
+    if (country === "Global") {
+      document.querySelector(".distance").style = "display: none";
+    } else {
+      document.querySelector(".distance").style = "display: block";
+      document.querySelector(
+        ".distance"
+      ).innerHTML = `<i class='bx bx-right-arrow-alt'></i> ${formatNumber(
+        Math.floor(getDistance(p1, p2) / 1000)
+      )} km`;
+    }
   });
 };
 
@@ -383,6 +388,7 @@ loadAllTimeChart = async (country) => {
 };
 
 initMap = async (country, lat, lng) => {
+  // const location = await covidApi.
   const data = await covidApi.getSummary();
   // let country_data;
   // data.Countries.forEach((e) => {
