@@ -108,6 +108,37 @@ getLocation = async (country) => {
     lon = Number(location[0].Lon);
   }
   initMap(country, lat, lon);
+  const p2 = new google.maps.LatLng(lat, lon);
+
+  navigator.geolocation.getCurrentPosition((position) => {
+    const latHere = position.coords.latitude;
+    const lonHere = position.coords.longitude;
+    const p1 = new google.maps.LatLng(latHere, lonHere);
+    document.querySelector(
+      ".distance"
+    ).innerHTML = `<i class='bx bx-right-arrow-alt'></i> ${formatNumber(
+      Math.floor(getDistance(p1, p2) / 1000)
+    )} km`;
+  });
+};
+
+var rad = function (x) {
+  return (x * Math.PI) / 180;
+};
+
+var getDistance = function (p1, p2) {
+  var R = 6378137; // Earth’s mean radius in meter
+  var dLat = rad(p2.lat() - p1.lat());
+  var dLong = rad(p2.lng() - p1.lng());
+  var a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(rad(p1.lat())) *
+      Math.cos(rad(p2.lat())) *
+      Math.sin(dLong / 2) *
+      Math.sin(dLong / 2);
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  var d = R * c;
+  return d; // returns the distance in meter
 };
 
 handleSelectCountry = async (country, element) => {
@@ -351,7 +382,15 @@ loadAllTimeChart = async (country) => {
   });
 };
 
-initMap = (country, lat, lng) => {
+initMap = async (country, lat, lng) => {
+  const data = await covidApi.getSummary();
+  // let country_data;
+  // data.Countries.forEach((e) => {
+  //   if (e.Country === country) {
+  //     console.log(e.TotalConfirmed, country);
+  //     country_data = e.TotalConfirmed;
+  //   }
+  // });
   const mapOptions = {
     zoom: country === "Global" || undefined ? 0 : 4,
     center: {
@@ -363,16 +402,18 @@ initMap = (country, lat, lng) => {
   const map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
   const marker = new google.maps.Marker({
-    // The below line is equivalent to writing:
-    // position: new google.maps.LatLng(-34.397, 150.644)
     position: { lat: lat, lng: lng },
     map: map,
+    // icon: {
+    //   path: google.maps.SymbolPath.CIRCLE,
+    //   fillColor: "orange",
+    //   fillOpacity: 0.2,
+    //   strokeColor: "red",
+    //   strokeWeight: 0.8,
+    //   scale: Math.sqrt(country_data) / 10,
+    // },
   });
-  // You can use a LatLng literal in place of a google.maps.LatLng object when
-  // creating the Marker object. Once the Marker object is instantiated, its
-  // position will be available as a google.maps.LatLng object. In this case,
-  // we retrieve the marker's position using the
-  // google.maps.LatLng.getPosition() method.
+
   const infowindow = new google.maps.InfoWindow({
     content: "<p>Marker Location:" + marker.getPosition() + "</p>",
   });
